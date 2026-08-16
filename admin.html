@@ -1,40 +1,155 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>VÉLORA — Admin</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#f6f5f1;color:#111}button,input,select,textarea{font:inherit}button{cursor:pointer}
-#authGate{position:fixed;inset:0;background:#f6f5f1;display:flex;align-items:center;justify-content:center;padding:20px;z-index:999}.auth{width:min(420px,100%);background:#fff;padding:28px;border-radius:24px;box-shadow:0 20px 60px #0001}.auth h1{letter-spacing:5px}.auth input{width:100%;padding:13px;border:1px solid #ddd;border-radius:11px;margin:7px 0}.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:800}.dark{background:#111;color:#fff}.light{background:#fff;border:1px solid #ddd}.danger{background:#fff0f0;color:#b00020}.layout{display:flex;min-height:100vh}.side{width:230px;background:#111;color:#fff;padding:22px;position:fixed;top:0;bottom:0}.brand{font-size:23px;font-weight:900;letter-spacing:5px;margin-bottom:30px}.nav{width:100%;text-align:left;background:transparent;color:#ccc;border:0;padding:13px;border-radius:10px;margin:3px 0}.nav.active,.nav:hover{background:#292929;color:#fff}.main{margin-left:230px;width:calc(100% - 230px);padding:25px;max-width:1500px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}.stat,.panel{background:#fff;border:1px solid #e5e2dc;border-radius:18px;padding:18px}.stat small{color:#777}.stat h2{margin:7px 0 0;font-size:28px}.page{display:none}.page.active{display:block}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:12px;border-bottom:1px solid #eee;text-align:left;white-space:nowrap}.search{padding:12px;border:1px solid #ddd;border-radius:10px;width:min(320px,100%);outline:none}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.product{background:#fff;border:1px solid #e5e2dc;border-radius:18px;overflow:hidden}.product img{width:100%;height:220px;object-fit:cover;background:#eee}.product .pbody{padding:14px}.actions{display:flex;gap:8px;margin-top:12px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{padding:12px;border:1px solid #ddd;border-radius:10px}.preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.preview img{width:90px;height:90px;object-fit:cover;border-radius:10px}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:20px;z-index:500}.modal.show{display:flex}.modalbox{background:#fff;border-radius:20px;padding:20px;width:min(760px,100%);max-height:90vh;overflow:auto}.status{font-weight:800}.pill{padding:5px 9px;border-radius:999px;background:#eee;font-size:12px}.items{background:#f7f6f2;padding:12px;border-radius:12px;margin-top:12px}.empty{text-align:center;padding:40px;color:#777}
-@media(max-width:800px){.side{width:68px;padding:14px 8px}.brand{font-size:0;text-align:center}.brand:after{content:"V";font-size:23px}.nav{font-size:0;text-align:center}.nav span{font-size:19px}.main{margin-left:68px;width:calc(100% - 68px);padding:14px}.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}.field.full{grid-column:auto}}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:13px}.top h1{font-size:22px}}
-</style>
-</head>
-<body>
-<div id="authGate"><div class="auth"><h1>VÉLORA</h1><p>Admin panel — sign in with your Supabase Auth admin account.</p><input id="email" type="email" placeholder="Admin email"><input id="password" type="password" placeholder="Password"><button class="btn dark" style="width:100%" onclick="login()">Sign in</button><p id="authError" style="color:#b00020"></p></div></div>
-<div class="layout" id="app" style="display:none">
-<aside class="side"><div class="brand">VÉLORA</div><button class="nav active" onclick="showPage('dashboard',this)"><span>📊</span> Dashboard</button><button class="nav" onclick="showPage('orders',this)"><span>🛒</span> Orders</button><button class="nav" onclick="showPage('products',this)"><span>📦</span> Products</button><button class="nav" onclick="showPage('add',this)"><span>➕</span> Add Product</button><button class="nav" onclick="logout()"><span>🚪</span> Logout</button></aside>
-<main class="main">
-<div class="top"><div><h1 id="title">Dashboard</h1><p style="color:#777">Live VÉLORA administration</p></div><button class="btn light" onclick="refreshAll()">↻ Refresh</button></div>
+async function addProduct(){
+  const name=document.getElementById("pName").value.trim();
+  const category=document.getElementById("pCategory").value.trim();
+  const price=Number(document.getElementById("pPrice").value);
+  const discount=Number(document.getElementById("pDiscount").value||0);
 
-<section id="dashboard" class="page active">
-<div class="stats"><div class="stat"><small>Total Orders</small><h2 id="sOrders">0</h2></div><div class="stat"><small>Pending</small><h2 id="sPending">0</h2></div><div class="stat"><small>Products</small><h2 id="sProducts">0</h2></div><div class="stat"><small>Sales</small><h2 id="sSales">₹0</h2></div></div>
-<div class="panel"><h2>Recent Orders</h2><div class="tablewrap"><table class="table"><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody id="recent"></tbody></table></div></div>
-</section>
+  if(!name || price<0 || !selectedFiles.length){
+    return alert("Name, price and at least one image are required.");
+  }
 
-<section id="orders" class="page"><div class="panel"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h2>Orders</h2><input id="orderSearch" class="search" placeholder="Search order / customer / phone" oninput="renderOrders()"></div><div class="tablewrap"><table class="table"><thead><tr><th>Order</th><th>Customer</th><th>Phone</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody id="ordersTable"></tbody></table></div></div></section>
+  const addBtn=document.getElementById("addBtn");
+  addBtn.disabled=true;
+  addBtn.textContent="Uploading...";
 
-<section id="products" class="page"><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Products</h2><button class="btn dark" onclick="showPage('add')">+ Add Product</button></div><div id="productGrid" class="grid"></div></div></section>
+  try{
+    const imageUrls=[];
 
-<section id="add" class="page"><div class="panel"><h2>Add Product</h2><div class="form"><div class="field"><label>Name</label><input id="pName" placeholder="Product name"></div><div class="field"><label>Category</label><input id="pCategory" placeholder="Men / Women / etc."></div><div class="field"><label>Price</label><input id="pPrice" type="number" min="0" placeholder="1000"></div><div class="field"><label>Discount %</label><input id="pDiscount" type="number" min="0" max="100" value="0"></div><div class="field full"><label>Photos (up to 5)</label><input id="pImages" type="file" accept="image/*" multiple onchange="previewFiles(event)"><div id="previews" class="preview"></div></div></div><button id="addBtn" class="btn dark" style="margin-top:15px" onclick="addProduct()">Add Product</button></div></section>
-</main></div>
+    for(const file of selectedFiles){
+      const ext=file.name.split(".").pop().toLowerCase();
+      const fileName=`${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const path=`products/${fileName}`;
 
-<div id="orderModal" class="modal"><div class="modalbox"><div style="display:flex;justify-content:space-between"><h2>Order details</h2><button class="btn light" onclick="closeModal('orderModal')">×</button></div><div id="orderDetails"></div></div></div>
-<div id="productModal" class="modal"><div class="modalbox"><div style="display:flex;justify-content:space-between"><h2>Product</h2><button class="btn light" onclick="closeModal('productModal')">×</button></div><div id="productDetails"></div></div></div>
+      const {error:uploadError}=await sb.storage
+        .from("products")
+        .upload(path,file,{upsert:false,contentType:file.type});
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script>
+      if(uploadError) throw uploadError;
+
+      const {data:urlData}=sb.storage
+        .from("products")
+        .getPublicUrl(path);
+
+      imageUrls.push(urlData.publicUrl);
+    }
+
+    const {error}=await sb.from("products").insert({
+      name,
+      category,
+      price,
+      discount,
+      images:imageUrls
+    });
+
+    if(error) throw error;
+
+    alert("Product added successfully!");
+
+    document.getElementById("pName").value="";
+    document.getElementById("pCategory").value="";
+    document.getElementById("pPrice").value="";
+    document.getElementById("pDiscount").value="0";
+    document.getElementById("pImages").value="";
+    document.getElementById("previews").innerHTML="";
+    selectedFiles=[];
+
+    await loadProducts();
+    showPage("products");
+
+  }catch(err){
+    console.error(err);
+    alert("Product upload failed: "+err.message);
+  }
+
+  addBtn.disabled=false;
+  addBtn.textContent="Add Product";
+}
+
+
+async function deleteProduct(id){
+  if(!confirm("Delete this product?")) return;
+
+  const {error}=await sb
+    .from("products")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    alert("Delete failed: "+error.message);
+    return;
+  }
+
+  products=products.filter(p=>p.id!==id);
+  renderProducts();
+  stats();
+
+  alert("Product deleted.");
+}
+
+
+async function refreshAll(){
+  await Promise.all([
+    loadProducts(),
+    loadOrders()
+  ]);
+}
+
+
+async function start(){
+  document.getElementById("authGate").style.display="none";
+  document.getElementById("app").style.display="flex";
+
+  await loadProducts();
+  await loadOrders();
+
+  subscribeOrders();
+}
+
+
+function subscribeOrders(){
+  sb.channel("velora-orders-live")
+    .on(
+      "postgres_changes",
+      {
+        event:"*",
+        schema:"public",
+        table:"orders"
+      },
+      async payload=>{
+        console.log("Order changed:",payload);
+        await loadOrders();
+      }
+    )
+    .subscribe();
+}
+
+
+async function checkSession(){
+  const {data}=await sb.auth.getSession();
+
+  if(data.session){
+    start();
+  }else{
+    document.getElementById("authGate").style.display="flex";
+    document.getElementById("app").style.display="none";
+  }
+}
+
+
+sb.auth.onAuthStateChange((event,session)=>{
+  if(session){
+    start();
+  }else if(event==="SIGNED_OUT"){
+    document.getElementById("authGate").style.display="flex";
+    document.getElementById("app").style.display="none";
+  }
+});
+
+
+checkSession();
+</script>
+</body>
+  </html><script>
 const C=window.VELORA_CONFIG||{},sb=window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_KEY);
 let orders=[],products=[],selectedFiles=[];
 const statuses=["placed","confirmed","packed","shipped","out_for_delivery","delivered","cancelled"];
