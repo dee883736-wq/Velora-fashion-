@@ -1,1000 +1,167 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Budgetbrand_gkp — Fashion Store</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VÉLORA — Store</title>
 <style>
-:root{
-  --accent:#111;
-  --bg:#faf9f7;
-  --card:#fff;
-  --muted:#777;
-  --border:#e9e6e1;
-}
-
-*{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
-
-body{
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:var(--bg);
-  color:#111;
-}
-
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-
-/* TOP */
-.top{
-  background:#111;
-  color:#fff;
-  text-align:center;
-  padding:8px;
-  font-size:12px;
-}
-
-/* HEADER */
-header{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:rgba(255,255,255,.94);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid #eee;
-}
-
-.nav{
-  max-width:1200px;
-  margin:auto;
-  padding:16px 20px;
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:800;
-  letter-spacing:3px;
-  margin-right:auto;
-  white-space:nowrap;
-}
-
-/* SEARCH */
-.searchWrap{
-  position:relative;
-  width:min(430px,42vw);
-}
-
-.search{
-  width:100%;
-  height:48px;
-  border:1px solid #e3e0db;
-  border-radius:17px;
-  padding:0 48px 0 45px;
-  outline:none;
-  background:linear-gradient(135deg,#fff,#faf9f6);
-  box-shadow:0 5px 20px #1111110a;
-  transition:.25s;
-  font-size:14px;
-}
-
-.search:hover{
-  border-color:#ccc6bd;
-  box-shadow:0 8px 26px #11111112;
-}
-
-.search:focus{
-  border-color:#111;
-  box-shadow:
-    0 0 0 4px #1111110a,
-    0 10px 30px #11111114;
-}
-
-.searchIcon{
-  position:absolute;
-  left:16px;
-  top:50%;
-  transform:translateY(-52%);
-  font-size:23px;
-  color:#555;
-  pointer-events:none;
-  z-index:2;
-}
-
-.clearSearch{
-  position:absolute;
-  right:9px;
-  top:9px;
-  width:30px;
-  height:30px;
-  border:0;
-  border-radius:50%;
-  background:#eee;
-  color:#555;
-  font-size:19px;
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-
-.clearSearch:hover{
-  background:#111;
-  color:#fff;
-}
-
-.searchMeta{
-  position:absolute;
-  top:56px;
-  left:5px;
-  right:5px;
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:13px;
-  padding:11px 13px;
-  font-size:12px;
-  color:#777;
-  box-shadow:0 15px 35px #1112;
-  display:none;
-  z-index:50;
-}
-
-.searchWrap.active .searchMeta{
-  display:block;
-}
-
-/* BUTTON */
-.cart{
-  border:0;
-  background:#111;
-  color:#fff;
-  border-radius:25px;
-  padding:11px 17px;
-  transition:.2s;
-  white-space:nowrap;
-}
-
-.cart:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px #1113;
-}
-
-/* HERO */
-.hero{
-  max-width:1200px;
-  margin:20px auto;
-  padding:70px 30px;
-  border-radius:24px;
-  background:linear-gradient(120deg,#eee,#d8d2ca);
-  display:flex;
-  align-items:center;
-  min-height:320px;
-}
-
-.hero h1{
-  font-size:clamp(38px,6vw,72px);
-  margin:0 0 12px;
-  line-height:1;
-}
-
-.hero p{
-  color:#555;
-  max-width:520px;
-  line-height:1.6;
-}
-
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:25px 20px;
-}
-
-/* CATEGORIES */
-.cats{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding-bottom:18px;
-  scrollbar-width:none;
-}
-
-.cats::-webkit-scrollbar{display:none}
-
-.cat{
-  white-space:nowrap;
-  border:1px solid #ddd;
-  background:#fff;
-  border-radius:22px;
-  padding:10px 16px;
-  transition:.2s;
-}
-
-.cat:hover{
-  transform:translateY(-1px);
-}
-
-.cat.active{
-  background:#111;
-  color:#fff;
-  border-color:#111;
-}
-
-/* PRODUCTS */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
-
-.product{
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid #eee;
-  transition:.25s;
-}
-
-.product:hover{
-  transform:translateY(-4px);
-  box-shadow:0 14px 35px #11111112;
-}
-
-.pic{
-  aspect-ratio:3/4;
-  background:#eee;
-  overflow:hidden;
-  cursor:pointer;
-  position:relative;
-}
-
-.pic img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition:.4s;
-}
-
-.product:hover .pic img{
-  transform:scale(1.04);
-}
-
-.photoBadge{
-  position:absolute;
-  bottom:10px;
-  right:10px;
-  background:#fff;
-  padding:6px 9px;
-  border-radius:20px;
-  font-size:11px;
-  box-shadow:0 4px 15px #0002;
-}
-
-.info{
-  padding:14px;
-}
-
-.name{
-  font-weight:700;
-}
-
-.muted{
-  color:var(--muted);
-  font-size:13px;
-  margin:5px 0;
-}
-
-.price{
-  font-weight:800;
-}
-
-.add,
-.viewGallery{
-  width:100%;
-  margin-top:10px;
-  padding:11px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.add{
-  border:0;
-  background:#111;
-  color:#fff;
-}
-
-.viewGallery{
-  border:1px solid #ddd;
-  background:#fff;
-}
-
-.viewGallery:hover{
-  background:#111;
-  color:#fff;
-}
-
-.empty{
-  text-align:center;
-  padding:60px;
-  color:#777;
-  grid-column:1/-1;
-}
-
-/* GALLERY */
-.galleryModal{
-  position:fixed;
-  inset:0;
-  background:#000b;
-  z-index:100;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-}
-
-.galleryModal.show{
-  display:flex;
-}
-
-.galleryBox{
-  width:min(900px,100%);
-  max-height:94vh;
-  overflow:auto;
-  background:#fff;
-  border-radius:22px;
-  padding:18px;
-  position:relative;
-}
-
-.galleryClose{
-  position:absolute;
-  right:15px;
-  top:15px;
-  width:40px;
-  height:40px;
-  border:0;
-  border-radius:50%;
-  background:#fff;
-  font-size:25px;
-  z-index:5;
-  box-shadow:0 5px 20px #0003;
-}
-
-.galleryMain{
-  position:relative;
-  width:100%;
-  aspect-ratio:1/1;
-  background:#f3f2ef;
-  border-radius:17px;
-  overflow:hidden;
-}
-
-.galleryMain img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-.galleryArrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:44px;
-  height:44px;
-  border:0;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 5px 20px #0003;
-  font-size:28px;
-  z-index:3;
-}
-
-.galleryArrow.prev{left:14px}
-.galleryArrow.next{right:14px}
-
-.galleryInfo{
-  padding:15px 3px 5px;
-}
-
-.galleryInfo h3{
-  margin:0;
-}
-
-.galleryCounter{
-  color:#777;
-  font-size:13px;
-  margin-top:4px;
-}
-
-.galleryDots{
-  display:flex;
-  justify-content:center;
-  gap:7px;
-  margin:10px 0;
-}
-
-.galleryDot{
-  width:8px;
-  height:8px;
-  padding:0;
-  border:0;
-  border-radius:50%;
-  background:#ccc;
-}
-
-.galleryDot.active{
-  background:#111;
-}
-
-.galleryThumbs{
-  display:flex;
-  gap:9px;
-  overflow-x:auto;
-  padding:5px 0;
-}
-
-.galleryThumb{
-  flex:0 0 65px;
-  height:78px;
-  padding:2px;
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:9px;
-  overflow:hidden;
-}
-
-.galleryThumb.active{
-  border:2px solid #111;
-}
-
-.galleryThumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:6px;
-}
-
-/* CART */
-.drawer{
-  position:fixed;
-  right:-430px;
-  top:0;
-  width:min(430px,100%);
-  height:100%;
-  background:#fff;
-  z-index:70;
-  box-shadow:-10px 0 30px #0002;
-  transition:.25s;
-  padding:20px;
-  overflow:auto;
-}
-
-.drawer.open{
-  right:0;
-}
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:#0005;
-  z-index:60;
-  display:none;
-}
-
-.overlay.show{
-  display:block;
-}
-
-.cartitem{
-  display:flex;
-  gap:12px;
-  border-bottom:1px solid #eee;
-  padding:14px 0;
-}
-
-.cartitem img{
-  width:65px;
-  height:85px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
-.qty button{
-  border:1px solid #ddd;
-  background:#fff;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-}
-
-.checkout{
-  width:100%;
-  padding:13px;
-  background:#111;
-  color:#fff;
-  border:0;
-  border-radius:10px;
-  margin-top:15px;
-}
-
-.close{
-  float:right;
-  border:0;
-  background:none;
-  font-size:24px;
-}
-
-/* CHECKOUT */
-.modal{
-  position:fixed;
-  inset:0;
-  background:#0006;
-  z-index:90;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.box{
-  background:#fff;
-  border-radius:18px;
-  width:min(520px,100%);
-  padding:22px;
-  max-height:90vh;
-  overflow:auto;
-}
-
-.box input,
-.box textarea,
-.box select{
-  width:100%;
-  padding:11px;
-  margin:7px 0 12px;
-  border:1px solid #ddd;
-  border-radius:9px;
-  outline:none;
-}
-
-/* TRACKING */
-.status{
-  display:flex;
-  justify-content:space-between;
-  margin:18px 0;
-  font-size:12px;
-  gap:4px;
-}
-
-.step{
-  flex:1;
-  text-align:center;
-}
-
-.dot{
-  width:24px;
-  height:24px;
-  border-radius:50%;
-  background:#ddd;
-  margin:auto auto 5px;
-}
-
-.step.done .dot{
-  background:#111;
-}
-
-.track{
-  margin-top:20px;
-  border:1px solid #eee;
-  border-radius:12px;
-  padding:15px;
-}
-
-/* RESPONSIVE */
-@media(max-width:850px){
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .searchWrap{
-    width:45vw;
-  }
-
-  .hero{
-    margin:12px;
-  }
-
-  .nav{
-    padding:14px 12px;
-    gap:10px;
-  }
-
-}
-
-@media(max-width:600px){
-
-  .logo{
-    font-size:18px;
-  }
-
-  .cart{
-    padding:10px 13px;
-    font-size:13px;
-  }
-
-  .searchWrap{
-    position:absolute;
-    left:12px;
-    right:12px;
-    top:62px;
-    width:auto;
-  }
-
-  .nav{
-    padding-bottom:64px;
-  }
-
-  .hero{
-    margin-top:62px;
-    min-height:280px;
-    padding:45px 22px;
-  }
-
-}
-
-@media(max-width:480px){
-
-  .grid{
-    gap:10px;
-  }
-
-  .info{
-    padding:10px;
-  }
-
-  .hero h1{
-    font-size:42px;
-  }
-
-  .galleryBox{
-    padding:10px;
-    border-radius:17px;
-  }
-
-  .galleryMain{
-    aspect-ratio:4/5;
-  }
-
-}
-</style>
-
-<style>
-.photoBad{position:absolute;right:10px;bottom:10px;background:#fff;padding:6px 9px;border-radius:20px;font-size:11px}.sale{position:absolute;right:10px;top:10px;background:#fff;padding:6px 9px;border-radius:20px;font-size:11px;font-weight:700}.best{position:absolute;left:10px;top:10px;background:#111;color:#fff;padding:6px 9px;border-radius:20px;font-size:9px;font-weight:800}.productInfo{padding:14px}.productInfo h3{margin:6px 0;font-size:16px}.rating{margin:7px 0}.stars{color:#d49a22;letter-spacing:1px}.price{display:flex;gap:8px;align-items:center;margin-top:8px}.price del{color:#999;font-size:12px}.reviewBtn{width:100%;margin-top:8px;padding:7px 10px;border:1px solid #ddd;background:#fff;border-radius:20px;font-size:11px;font-weight:600}.reviewBtn:hover{background:#111;color:#fff}.empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:#777}.cartItem{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eee}.cartItem img{width:60px;height:72px;object-fit:cover;border-radius:9px}.qty{display:flex;align-items:center;gap:7px;margin-top:8px}.qty button{border:1px solid #ddd;background:#fff;border-radius:50%;width:26px;height:26px}.qty .remove{border:0;border-radius:8px;width:auto;padding:5px 8px;font-size:10px}.success{background:#e9f8ef;color:#18753f;padding:12px;border-radius:10px;margin-top:12px;line-height:1.5}.track{margin-top:12px;background:#f5f5f2;padding:12px;border-radius:10px}.track p{margin:5px 0;color:#777}.thumb{width:64px;height:76px;border:1px solid #ddd;background:#fff;border-radius:8px;padding:2px}.thumb img{width:100%;height:100%;object-fit:cover;border-radius:6px}.thumb.active{border:2px solid #111}.dot{width:8px;height:8px;border:0;border-radius:50%;background:#ccc;margin:4px}.dot.active{background:#111}.galleryDots{display:flex;justify-content:center;padding:8px}.galleryThumbs{display:flex;gap:8px;overflow:auto;padding:5px}.photoBad,.sale,.best{z-index:2}.pic{position:relative}.add{width:100%;border:0;background:#111;color:#fff;padding:10px;border-radius:9px;font-weight:700;margin-top:10px}.muted{color:#777;font-size:12px}
+:root{--ink:#111;--muted:#777;--line:#e7e5e0;--soft:#f7f6f2;--gold:#c99420}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:#fff}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1200px;margin:auto;padding:18px 20px;display:flex;align-items:center;gap:16px}.logo{font-weight:900;letter-spacing:5px;font-size:25px}.spacer{flex:1}
+.navbtn{border:1px solid var(--line);background:#111;color:#fff;border-radius:999px;padding:11px 17px;font-weight:700}.navbtn.light{background:#fff;color:#111}
+.hero{max-width:1200px;margin:auto;padding:35px 20px 20px}.hero h1{font-size:clamp(32px,6vw,62px);line-height:.98;margin:0 0 12px;letter-spacing:-2px}.hero p{color:var(--muted);max-width:650px}
+.tools{max-width:1200px;margin:auto;padding:0 20px 18px;display:flex;gap:10px;flex-wrap:wrap}.search{flex:1;min-width:220px;border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:var(--soft);outline:none}.cat{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px}.cat.active{background:#111;color:#fff}
+.grid{max-width:1200px;margin:auto;padding:10px 20px 80px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff}.pic{height:300px;background:#f1f1ef;position:relative}.pic img{width:100%;height:100%;object-fit:cover;display:block}.badge{position:absolute;left:12px;top:12px;background:#111;color:#fff;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}.info{padding:16px}.info h3{margin:0 0 5px;font-size:18px}.muted{color:var(--muted);font-size:13px}.price{font-size:20px;font-weight:900;margin:10px 0}.old{text-decoration:line-through;color:#aaa;font-size:14px;margin-left:7px}.add{width:100%;border:0;background:#111;color:#fff;padding:13px;border-radius:13px;font-weight:800}.review{margin-top:9px;width:100%;border:1px solid var(--line);background:#fff;padding:10px;border-radius:13px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:.2s;z-index:50}.overlay.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;right:-440px;top:0;bottom:0;width:min(440px,100%);background:#fff;z-index:60;padding:22px;transition:.25s;overflow:auto}.drawer.open{right:0}.close{border:0;background:#f2f2ef;width:40px;height:40px;border-radius:50%;font-size:22px}.cartrow{display:grid;grid-template-columns:62px 1fr auto;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.cartrow img{width:62px;height:70px;object-fit:cover;border-radius:10px}.qty button{border:1px solid var(--line);background:#fff;border-radius:7px;width:28px;height:28px}.checkout{width:100%;padding:14px;border:0;border-radius:13px;background:#111;color:#fff;font-weight:800;margin-top:10px}
+.modal{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.box{background:#fff;border-radius:22px;padding:22px;width:min(560px,100%);max-height:90vh;overflow:auto}.box input,.box textarea,.box select{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;margin:7px 0;outline:none}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.order-card{border:1px solid var(--line);border-radius:15px;padding:13px;margin:9px 0}.status{font-weight:800}.steps{display:flex;gap:5px;overflow:auto;margin:14px 0}.step{min-width:85px;text-align:center;font-size:11px;color:#aaa}.step .dot{width:15px;height:15px;border-radius:50%;background:#ddd;margin:0 auto 5px}.step.done{color:#111}.step.done .dot{background:#111}
+.empty{padding:40px 10px;text-align:center;color:var(--muted)}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:.2s;z-index:100}.toast.show{opacity:1;transform:translateX(-50%)}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){.grid{grid-template-columns:repeat(2,1fr);padding-left:12px;padding-right:12px}.tools,.hero{padding-left:12px;padding-right:12px}.pic{height:230px}.logo{font-size:21px}.nav{padding:14px 12px}.two{grid-template-columns:1fr}.navbtn{padding:10px 12px}}
 </style>
 </head>
-
 <body>
+<header class="header"><nav class="nav"><div class="logo">VÉLORA</div><div class="spacer"></div><button class="navbtn light" onclick="openOrders()">My Orders</button><button class="navbtn" onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button></nav></header>
+<section class="hero"><h1>Curated. Simple. Yours.</h1><p>Shop the latest products from VÉLORA. Add to cart, enter delivery details and place your order securely.</p></section>
+<div class="tools"><input id="search" class="search" placeholder="Search products, categories..." oninput="renderProducts()"><div id="cats"></div></div>
+<main id="products" class="grid"></main>
 
-<div class="top" id="announcement">
-  Free shipping on selected orders • New collection live
-</div>
-
-<header>
-  <div class="nav">
-
-    <div class="logo" id="logo">
-      VÉLORA
-    </div>
-
-    <div class="searchWrap" id="searchWrap">
-
-      <span class="searchIcon">⌕</span>
-
-      <input
-        id="search"
-        class="search"
-        autocomplete="off"
-        placeholder="Search products, categories..."
-      >
-
-      <button
-        class="clearSearch"
-        id="clearSearch"
-      >×</button>
-
-      <div
-        class="searchMeta"
-        id="searchMeta"
-      ></div>
-
-    </div>
-
-    <button class="cart" onclick="openCart()">
-      🛒 Cart <span id="count">0</span>
-    </button>
-
-  </div>
-</header>
-
-<main>
-
-<section class="hero">
-
-  <div>
-
-    <div class="muted">
-      NEW SEASON
-    </div>
-
-    <h1 id="heroTitle">
-      Everyday, elevated.
-    </h1>
-
-    <p id="heroText">
-      Curated fashion essentials designed for your everyday style.
-    </p>
-
-    <button
-      class="cart"
-      onclick="document.getElementById('products').scrollIntoView()"
-    >
-      Shop collection
-    </button>
-
-  </div>
-
-</section>
-
-<div class="wrap">
-
-  <div
-    class="cats"
-    id="cats"
-  ></div>
-
-  <div
-    class="grid"
-    id="products"
-  ></div>
-
-</div>
-
-</main>
-
-<!-- PRODUCT GALLERY -->
-
-<div
-  class="galleryModal"
-  id="galleryModal"
-  onclick="galleryBackground(event)"
->
-
-  <div class="galleryBox">
-
-    <button
-      class="galleryClose"
-      onclick="closeGallery()"
-    >
-      ×
-    </button>
-
-    <div class="galleryMain">
-
-      <button
-        class="galleryArrow prev"
-        onclick="galleryPrev()"
-      >
-        ‹
-      </button>
-
-      <img
-        id="galleryImage"
-        src=""
-        alt="Product"
-      >
-
-      <button
-        class="galleryArrow next"
-        onclick="galleryNext()"
-      >
-        ›
-      </button>
-
-    </div>
-
-    <div class="galleryInfo">
-
-      <h3 id="galleryName"></h3>
-
-      <div
-        class="galleryCounter"
-        id="galleryCounter"
-      ></div>
-
-    </div>
-
-    <div
-      class="galleryDots"
-      id="galleryDots"
-    ></div>
-
-    <div
-      class="galleryThumbs"
-      id="galleryThumbs"
-    ></div>
-
-  </div>
-
-</div>
-
-<!-- CART -->
-
-<div
-  class="overlay"
-  id="overlay"
-  onclick="closeCart()"
-></div>
-
-<aside
-  class="drawer"
-  id="drawer"
->
-
-  <button
-    class="close"
-    onclick="closeCart()"
-  >×</button>
-
-  <h2>Your Cart</h2>
-
-  <div id="cartList"></div>
-
-  <h3 id="total">
-    Total: ₹0
-  </h3>
-
-  <button
-    class="checkout"
-    onclick="checkout()"
-  >
-    Proceed to checkout
-  </button>
-
-  <hr>
-
-  <h3>Track an order</h3>
-
-  <input
-    id="trackId"
-    placeholder="Order ID"
-  >
-
-  <button
-    class="checkout"
-    onclick="trackOrder()"
-  >
-    Track order
-  </button>
-
-  <div id="trackResult"></div>
-
+<div id="overlay" class="overlay" onclick="closeCart()"></div>
+<aside id="drawer" class="drawer">
+  <button class="close" onclick="closeCart()">×</button>
+  <h2>Your Cart</h2><div id="cartList"></div><h3 id="cartTotal">Total: ₹0</h3>
+  <button class="checkout" onclick="checkout()">Proceed to checkout</button>
+  <hr><h3>Track order</h3><input id="trackId" class="search" style="width:100%" placeholder="Order ID e.g. VLR-12345678">
+  <button class="checkout" onclick="trackOrder()">Track order</button><div id="trackResult"></div>
 </aside>
 
-<!-- CHECKOUT -->
+<div id="checkoutModal" class="modal"><div class="box">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h2>Checkout</h2><button class="close" onclick="closeCheckout()">×</button></div>
+  <input id="name" placeholder="Full name *">
+  <input id="phone" inputmode="tel" placeholder="Phone number *">
+  <textarea id="address" rows="3" placeholder="Full delivery address *"></textarea>
+  <input id="pincode" inputmode="numeric" placeholder="PIN code *">
+  <select id="payment"><option value="cod">Cash on Delivery</option><option value="online">Online payment / WhatsApp</option></select>
+  <button id="placeBtn" class="checkout" onclick="placeOrder()">Place order</button>
+  <div id="orderMsg"></div>
+</div></div>
 
-<div
-  class="modal"
-  id="modal"
->
+<div id="ordersModal" class="modal"><div class="box">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h2>My Orders</h2><button class="close" onclick="closeOrders()">×</button></div>
+  <div id="myOrders"></div>
+</div></div>
+<div id="toast" class="toast"></div>
 
-  <div class="box">
-
-    <button
-      class="close"
-      onclick="closeModal()"
-    >×</button>
-
-    <h2>Checkout</h2>
-
-    <input
-      id="name"
-      placeholder="Full name"
-    >
-
-    <input
-      id="phone"
-      placeholder="Phone number"
-    >
-
-    <textarea
-      id="address"
-      rows="3"
-      placeholder="Full delivery address"
-    ></textarea>
-
-    <input
-      id="pincode"
-      placeholder="PIN code"
-    >
-
-    <select id="payment">
-
-      <option value="cod">
-        Cash on Delivery
-      </option>
-
-      <option value="online">
-        Online payment (connect gateway)
-      </option>
-
-    </select>
-
-    <button
-      class="checkout"
-      onclick="placeOrder()"
-    >
-      Place order
-    </button>
-
-    <div id="orderMsg"></div>
-
-  </div>
-
-</div>
-
-<script src="config.js?v=2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
-const {SUPABASE_URL,SUPABASE_ANON_KEY}=window.VELORA_CONFIG;
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-let products=[], cart=JSON.parse(localStorage.getItem('velora_cart')||'[]'), category='All';
-let galleryProduct=null,galleryIndex=0;
-const $=id=>document.getElementById(id);
-const money=n=>'₹'+Number(n||0).toLocaleString('en-IN');
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const C=window.VELORA_CONFIG||{};
+const sb=window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_KEY);
+let products=[],category="All";
+let cart=JSON.parse(localStorage.getItem("velora_cart")||"[]");
+let myOrders=JSON.parse(localStorage.getItem("velora_orders")||"[]");
+
 const demo=[
-{name:'Classic Oversized Tee',category:'Men',price:799,discount:0,active:true,images:['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=900&q=85']},
-{name:'Minimal Linen Shirt',category:'Men',price:1299,discount:10,active:true,images:['https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=900&q=85']},
-{name:'Elegant Summer Dress',category:'Women',price:1599,discount:15,active:true,images:['https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=900&q=85']},
-{name:'Everyday Handbag',category:'Accessories',price:999,discount:5,active:true,images:['https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=900&q=85']},
-{name:'Streetwear Hoodie',category:'Men',price:1499,discount:10,active:true,images:['https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85']},
-{name:'Relaxed Co-ord Set',category:'Women',price:1399,discount:10,active:true,images:['https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=85']},
-{name:'Classic Cap',category:'Accessories',price:499,discount:0,active:true,images:['https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=85']},
-{name:'Premium Sneakers',category:'Footwear',price:1899,discount:10,active:true,images:['https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=85']}
-].map((p,i)=>({...p,id:'demo'+i}));
-function imgs(p){if(Array.isArray(p.images)&&p.images.length)return p.images;if(typeof p.images==='string'){try{let x=JSON.parse(p.images);if(Array.isArray(x))return x}catch(e){}}return p.image?[p.image]:[]}
-function finalPrice(p){return Number(p.discount)>0?Math.round(Number(p.price)*(1-Number(p.discount)/100)):Number(p.price)}
-async function load(){try{const {data,error}=await sb.from('products').select('*').eq('active',true).order('created_at',{ascending:false});if(error)throw error;products=data?.length?data:demo}catch(e){products=demo}renderCats();renderProducts();renderCart();}
-function renderCats(){let cs=['All',...new Set(products.map(p=>p.category).filter(Boolean))];$('cats').innerHTML=cs.map(c=>`<button class="cat ${c===category?'active':''}" onclick="category='${esc(c)}';renderCats();renderProducts()">${esc(c)}</button>`).join('')}
-function ratingHTML(p){return `<span class="stars">★★★★★</span> <span style="color:#777;font-size:12px">5.0</span>`}
-function renderProducts(){let q=$('search').value.toLowerCase().trim();let list=products.filter(p=>(category==='All'||p.category===category)&&(!q||p.name.toLowerCase().includes(q)||String(p.category||'').toLowerCase().includes(q)));$('products').innerHTML=list.length?list.map(p=>{let im=imgs(p),price=finalPrice(p),discount=Number(p.discount||0);return `<article class="product"><div class="pic" onclick="openGallery('${esc(p.id)}')"><img src="${esc(im[0]||'')}" alt="${esc(p.name)}" loading="lazy"><div class="photoBad">📷 ${im.length||1}</div>${discount?`<div class="sale">-${discount}%</div>`:''}<div class="best">🏆 BEST SELLER</div></div><div class="productInfo"><div class="muted">${esc(p.category||'Fashion')}</div><h3>${esc(p.name)}</h3><div class="rating">${ratingHTML(p)}</div><div class="price"><b>${money(price)}</b>${discount?`<del>${money(p.price)}</del>`:''}</div><button class="add" onclick="addToCart('${esc(p.id)}')">Add to cart</button><button class="reviewBtn" onclick="openReview('${esc(p.id)}')">★ Rate & review</button></div></article>`}).join(''):`<div class="empty"><h2>No products found</h2><p>Try another search or category.</p></div>`;$('searchMeta').textContent=list.length?`${list.length} product${list.length>1?'s':''} found`:'No products found';}
-function addToCart(id){let p=products.find(x=>x.id===id);if(!p)return;let item=cart.find(x=>x.id===id);if(item)item.qty++;else cart.push({id:p.id,name:p.name,price:finalPrice(p),image:imgs(p)[0]||'',qty:1});saveCart();openCart()}
-function saveCart(){localStorage.setItem('velora_cart',JSON.stringify(cart));renderCart()}
-function renderCart(){$('count').textContent=cart.reduce((a,x)=>a+x.qty,0);$('cartList').innerHTML=cart.length?cart.map((x,i)=>`<div class="cartItem"><img src="${esc(x.image)}"><div style="flex:1"><b>${esc(x.name)}</b><div>${money(x.price)}</div><div class="qty"><button onclick="changeQty(${i},-1)">−</button>${x.qty}<button onclick="changeQty(${i},1)">+</button><button class="remove" onclick="changeQty(${i},-${x.qty})">Remove</button></div></div></div>`).join(''):'<p style="color:#777">Your cart is empty.</p>';let total=cart.reduce((a,x)=>a+x.price*x.qty,0);$('total').textContent='Total: '+money(total)}
-function changeQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart()}
-function openCart(){$('drawer').classList.add('open');$('overlay').classList.add('show')}
-function closeCart(){$('drawer').classList.remove('open');$('overlay').classList.remove('show')}
-function checkout(){if(!cart.length){alert('Your cart is empty.');return}closeCart();$('modal').classList.add('show')}
-function closeModal(){$('modal').classList.remove('show')}
-function openGallery(id){galleryProduct=products.find(p=>p.id===id);if(!galleryProduct)return;galleryIndex=0;renderGallery();$('galleryModal').classList.add('show')}
-function renderGallery(){let im=imgs(galleryProduct);$('galleryImage').src=im[galleryIndex]||'';$('galleryName').textContent=galleryProduct.name;$('galleryCounter').textContent=`${galleryIndex+1} / ${im.length}`;$('galleryDots').innerHTML=im.map((_,i)=>`<button class="dot ${i===galleryIndex?'active':''}" onclick="galleryIndex=${i};renderGallery()"></button>`).join('');$('galleryThumbs').innerHTML=im.map((x,i)=>`<button class="thumb ${i===galleryIndex?'active':''}" onclick="galleryIndex=${i};renderGallery()"><img src="${esc(x)}"></button>`).join('')}
-function galleryPrev(){if(!galleryProduct)return;let n=imgs(galleryProduct).length;galleryIndex=(galleryIndex-1+n)%n;renderGallery()}
-function galleryNext(){if(!galleryProduct)return;let n=imgs(galleryProduct).length;galleryIndex=(galleryIndex+1)%n;renderGallery()}
-function closeGallery(){$('galleryModal').classList.remove('show')}
-function galleryBackground(e){if(e.target.id==='galleryModal')closeGallery()}
-function openReview(id){let p=products.find(x=>x.id===id);if(!p)return;let name=prompt(`Rate ${p.name} from 1 to 5 stars:`);let rating=Number(name);if(!Number.isInteger(rating)||rating<1||rating>5)return alert('Please enter a rating from 1 to 5.');let text=prompt('Write your feedback:')||'';submitReview(id,rating,text)}
-async function submitReview(product_id,rating,text){let customer_name=prompt('Your name:')||'Customer';const {error}=await sb.from('reviews').insert({product_id,rating,review_text:text,customer_name});if(error){alert('Review could not be submitted: '+error.message);return}alert('Thank you! Your review was submitted.')}
-async function placeOrder(){if(!cart.length)return alert('Cart is empty.');let name=$('name').value.trim(),phone=$('phone').value.trim(),address=$('address').value.trim(),pincode=$('pincode').value.trim(),payment=$('payment').value;if(!name||!phone||!address||!pincode)return alert('Please fill all delivery details.');if(!/^\d{10}$/.test(phone))return alert('Enter a valid 10 digit phone number.');let total=cart.reduce((a,x)=>a+x.price*x.qty,0),order_code='VLR-'+Math.floor(100000+Math.random()*900000);let payload={order_code,customer_name:name,phone,address,pincode,payment_method:payment,total,status:'placed',items:cart};let {error}=await sb.from('orders').insert(payload);if(error){alert('Order failed: '+error.message);return}$('orderMsg').innerHTML=`<div class="success">Order placed successfully!<br><b>Order ID: ${order_code}</b><br>Use this ID to track your order.</div>`;cart=[];saveCart()}
-async function trackOrder(){let id=$('trackId').value.trim();if(!id)return;let {data,error}=await sb.rpc('track_order',{p_order_code:id});data=data?.[0];if(error||!data){$('trackResult').innerHTML='<p style="color:#b00;margin-top:10px">Order not found.</p>';return}$('trackResult').innerHTML=`<div class="track"><b>${esc(data.order_code)}</b><p>${esc(data.customer_name)}</p><strong>${esc((data.status||'placed').replaceAll('_',' ').toUpperCase())}</strong></div>`}
-$('search').addEventListener('input',()=>{ $('clearSearch').style.display=$('search').value?'flex':'none';$('searchWrap')?.classList.add('active');renderProducts()});$('clearSearch').addEventListener('click',()=>{$('search').value='';$('clearSearch').style.display='none';renderProducts()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeGallery();closeModal();closeCart()}if(e.key==='ArrowLeft')galleryPrev();if(e.key==='ArrowRight')galleryNext()});
+ {id:"demo1",name:"Classic Oversized Tee",category:"Men",price:799,discount:0,images:["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85"]},
+ {id:"demo2",name:"Minimal Linen Shirt",category:"Men",price:1299,discount:10,images:["https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=85"]},
+ {id:"demo3",name:"Relaxed Co-ord Set",category:"Women",price:1399,discount:10,images:["https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85"]},
+ {id:"demo4",name:"Classic Cap",category:"Accessories",price:499,discount:0,images:["https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=85"]},
+ {id:"demo5",name:"Premium Sneakers",category:"Footwear",price:1899,discount:10,images:["https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85"]}
+];
+
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function images(p){if(Array.isArray(p.images)&&p.images.length)return p.images;if(typeof p.images==="string"){try{let a=JSON.parse(p.images);if(Array.isArray(a))return a}catch{}}return p.image?[p.image]:[]}
+function finalPrice(p){return Math.round(Number(p.price||0)*(1-Number(p.discount||0)/100))}
+function saveCart(){localStorage.setItem("velora_cart",JSON.stringify(cart));renderCart()}
+function saveOrders(){localStorage.setItem("velora_orders",JSON.stringify(myOrders))}
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2200)}
+
+async function load(){
+  try{
+    const {data,error}=await sb.from("products").select("*").eq("active",true).order("created_at",{ascending:false});
+    if(error) throw error;
+    products=(data&&data.length)?data:demo;
+  }catch(e){console.warn(e);products=demo}
+  renderCats();renderProducts();renderCart();
+}
+function renderCats(){
+  const cs=["All",...new Set(products.map(p=>p.category).filter(Boolean))];
+  document.getElementById("cats").innerHTML=cs.map(c=>`<button class="cat ${c===category?"active":""}" onclick="category='${esc(c)}';renderCats();renderProducts()">${esc(c)}</button>`).join(" ");
+}
+function renderProducts(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  const list=products.filter(p=>(category==="All"||p.category===category)&&(!q||String(p.name).toLowerCase().includes(q)||String(p.category||"").toLowerCase().includes(q)));
+  document.getElementById("products").innerHTML=list.length?list.map(p=>{
+    const im=images(p)[0]||"";
+    const price=finalPrice(p);
+    return `<article class="card"><div class="pic"><img src="${esc(im)}" alt="${esc(p.name)}" onerror="this.style.display='none'">${p.discount?`<span class="badge">-${esc(p.discount)}%</span>`:""}</div><div class="info"><div class="muted">${esc(p.category||"General")}</div><h3>${esc(p.name)}</h3><div>★★★★★ <span class="muted">5.0</span></div><div class="price">₹${price.toLocaleString("en-IN")}${p.discount?`<span class="old">₹${Number(p.price).toLocaleString("en-IN")}</span>`:""}</div><button class="add" onclick="addToCart('${esc(p.id)}')">Add to cart</button><button class="review" onclick="toast('Review feature coming soon')">★ Rate & review</button></div></article>`
+  }).join(""):`<div class="empty" style="grid-column:1/-1">No products found.</div>`;
+}
+function addToCart(id){
+  const p=products.find(x=>String(x.id)===String(id));if(!p)return;
+  const existing=cart.find(x=>String(x.id)===String(id));
+  const item={id:p.id,name:p.name,price:finalPrice(p),image:images(p)[0]||"",qty:existing?existing.qty+1:1};
+  if(existing) existing.qty++; else cart.push(item);saveCart();toast("Added to cart");
+}
+function renderCart(){
+  document.getElementById("cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0);
+  const el=document.getElementById("cartList");
+  el.innerHTML=cart.length?cart.map(x=>`<div class="cartrow"><img src="${esc(x.image)}"><div><b>${esc(x.name)}</b><div>₹${Number(x.price).toLocaleString("en-IN")}</div></div><div class="qty"><button onclick="changeQty('${esc(x.id)}',-1)">−</button> ${x.qty} <button onclick="changeQty('${esc(x.id)}',1)">+</button></div></div>`).join(""):`<div class="empty">Your cart is empty.</div>`;
+  document.getElementById("cartTotal").textContent="Total: ₹"+cart.reduce((a,x)=>a+x.price*x.qty,0).toLocaleString("en-IN");
+}
+function changeQty(id,n){const x=cart.find(x=>String(x.id)===String(id));if(!x)return;x.qty+=n;if(x.qty<=0)cart=cart.filter(y=>String(y.id)!==String(id));saveCart()}
+function openCart(){document.getElementById("drawer").classList.add("open");document.getElementById("overlay").classList.add("show")}
+function closeCart(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("show")}
+function checkout(){if(!cart.length)return toast("Your cart is empty");document.getElementById("checkoutModal").classList.add("show")}
+function closeCheckout(){document.getElementById("checkoutModal").classList.remove("show")}
+
+function makeOrderCode(){return "VLR-"+Date.now().toString().slice(-8)}
+function validPhone(v){return /^[0-9+\-\s()]{7,20}$/.test(v)}
+async function placeOrder(){
+  if(!cart.length)return toast("Your cart is empty");
+  const name=document.getElementById("name").value.trim(),phone=document.getElementById("phone").value.trim(),address=document.getElementById("address").value.trim(),pincode=document.getElementById("pincode").value.trim(),payment=document.getElementById("payment").value;
+  if(name.length<2)return toast("Enter your full name");
+  if(!validPhone(phone))return toast("Enter a valid phone number");
+  if(address.length<5)return toast("Enter full delivery address");
+  if(!/^[0-9]{4,10}$/.test(pincode))return toast("Enter valid PIN code");
+  const total=cart.reduce((a,x)=>a+x.price*x.qty,0),code=makeOrderCode();
+  const btn=document.getElementById("placeBtn");btn.disabled=true;btn.textContent="Placing order...";
+  const items=cart.map(x=>({id:x.id,name:x.name,price:x.price,qty:x.qty,image:x.image}));
+  const {error}=await sb.from("orders").insert({order_code:code,customer_name:name,phone,address,pincode,payment_method:payment,total,status:"placed",items});
+  btn.disabled=false;btn.textContent="Place order";
+  if(error){console.error(error);alert("Order failed: "+error.message);return}
+  const local={order_code:code,customer_name:name,phone,address,pincode,payment_method:payment,total,status:"placed",items,created_at:new Date().toISOString()};
+  myOrders.unshift(local);saveOrders();cart=[];saveCart();
+  document.getElementById("orderMsg").innerHTML=`<div class="order-card"><b>Order placed successfully!</b><p>Order ID: <strong>${esc(code)}</strong></p><p>Payment: ${payment==="online"?"Online / WhatsApp":"Cash on Delivery"}</p><p>Total: <strong>₹${total.toLocaleString("en-IN")}</strong></p></div>`;
+  closeCheckout();openOrders();
+  if(payment==="online"){
+    const wa=String(C.WHATSAPP_NUMBER||"").replace(/\D/g,"");
+    if(!wa){alert("Order saved. Add your WhatsApp number in config.js to enable the WhatsApp redirect.");}
+    else{
+      const msg=`New VÉLORA Order%0AOrder ID: ${code}%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0APIN: ${pincode}%0APayment: Online%0ATotal: ₹${total}%0AItems: ${items.map(x=>x.name+" x"+x.qty).join(", ")}`;
+      window.location.href=`https://wa.me/${wa}?text=${encodeURIComponent(`New VÉLORA Order\nOrder ID: ${code}\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\nPIN: ${pincode}\nPayment: Online\nTotal: ₹${total}\nItems: ${items.map(x=>x.name+" x"+x.qty).join(", ")}`)}`;
+    }
+  }
+}
+function statusTimeline(status){
+  const states=["placed","confirmed","packed","shipped","out_for_delivery","delivered"],labels=["Placed","Confirmed","Packed","Shipped","Out for delivery","Delivered"],i=states.indexOf(status);
+  if(status==="cancelled")return `<p><b>Cancelled</b></p>`;
+  return `<div class="steps">${labels.map((l,k)=>`<div class="step ${k<=i?"done":""}"><div class="dot"></div>${l}</div>`).join("")}</div>`;
+}
+function renderMyOrders(){
+  const el=document.getElementById("myOrders");
+  el.innerHTML=myOrders.length?myOrders.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(o.order_code)}</b><span class="status">${esc(o.status)}</span></div><div class="muted">${new Date(o.created_at).toLocaleString("en-IN")}</div><p>${esc(o.customer_name)} • ${esc(o.phone)}</p><p>${esc(o.address)}, ${esc(o.pincode)}</p><b>₹${Number(o.total).toLocaleString("en-IN")}</b>${statusTimeline(o.status)}<button class="review" onclick="trackSaved('${esc(o.order_code)}')">View order</button></div>`).join(""):`<div class="empty">No orders yet.</div>`;
+}
+function openOrders(){renderMyOrders();document.getElementById("ordersModal").classList.add("show")}
+function closeOrders(){document.getElementById("ordersModal").classList.remove("show")}
+function trackSaved(id){document.getElementById("ordersModal").classList.remove("show");openCart();document.getElementById("trackId").value=id;trackOrder()}
+function trackOrder(){
+  const id=document.getElementById("trackId").value.trim(),o=myOrders.find(x=>x.order_code===id);
+  document.getElementById("trackResult").innerHTML=o?`<div class="order-card"><b>${esc(o.order_code)}</b><p>${esc(o.customer_name)} • ₹${Number(o.total).toLocaleString("en-IN")}</p>${statusTimeline(o.status)}</div>`:`<div class="empty">Order not found on this device. If you placed it on another device, ask the admin for the current status.</div>`;
+}
 load();
 </script>
 </body>
